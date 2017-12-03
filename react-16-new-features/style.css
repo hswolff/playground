@@ -1,9 +1,23 @@
+html,
+body {
+  margin: 0;
+}
+
 #app {
   font-family: sans-serif;
   text-align: center;
   width: 500px;
   margin: 0 auto;
 }
+
+.notification {
+  text-align: center;
+  width: 100%;
+  background: #ccc;
+  border-bottom: 1px solid #988f8f;
+  padding: 10px 0;
+}
+
 .data-container {
   border-radius: 4px;
   border: 1px solid gray;
