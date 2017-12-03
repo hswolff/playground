@@ -11,6 +11,104 @@
     <h1>
         <a href="react16.html">React 16</a>
     </h1>
+
+    <p>A small demo app built to show the new features of React 16. Ideally it also shows why these new features allow you to
+        create better applications.</p>
+    <p>Each page shows the same application, with the React 16 example taking advantage of new features to create a better user
+        experience.
+    </p>
+    <p>Here's a summary of the new features shown.</p>
+
+    <ul>
+        <li>New core architecture
+            <ul>
+                <li>Codenamed Fiber</li>
+                <li>Unlocks many upcoming features, such as async rendering.</li>
+            </ul>
+        </li>
+        <li>New render return types
+            <ul>
+                <li>
+                    Strings
+                    <ul>
+                        <li>
+                            Notice in the rendered DOM there are no longer any React specific comments of the form.
+                            <pre>
+&lt;!-- react-text: 8 --&gt;
+text in here
+&lt;!-- /react-text --&gt;
+                                    </pre>
+                        </li>
+                    </ul>
+                </li>
+                <li>Fragments
+                    <ul>
+                        <li>
+                            No need to wrap list items in an extra element. Instead of having to wrap items in an extra element you can just return an
+                            array.
+                            <pre>
+render() {
+    return [
+        &lt;li key="A">First item&lt;/li>,
+        &lt;li key="B">Second item&lt;/li>,
+        &lt;li key="C">Third item&lt;/li>,
+    ];
+}
+                                    </pre>
+                        </li>
+                        <li>React v16.2.0 brings improved support for fragments via a first-class Fragment component.
+                            <br/> Means now you can write fragments like this.
+                            <pre>
+render() {
+    return (
+        &lt;Fragemnt>
+            &lt;li key="A">First item&lt;/li>
+            &lt;li key="B">Second item&lt;/li>
+            &lt;li key="C">Third item&lt;/li>
+        &lt;/Fragment>
+    );
+}
+                                    </pre> Alternatively you can also use the JSX fragment syntax.
+                            <pre>&lt;>Item&lt;/></pre>
+                        </li>
+
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Error Boundaries
+            <ul>
+                <li>
+                    Catch runtime errors within a React component. Similar in behavior to try/catch, they allow you to gracefully recover from
+                    errors.
+                    <br/> Implemented via new lifecycle method componentDidCatch.
+                </li>
+            </ul>
+        </li>
+        <li>Portals
+            <ul>
+                <li>First-class support for rendering children into a DOM node that exists outside the DOM hierarchy of the parent
+                    component.
+                    <ul>
+                        <li>Makes it easier to create Modal components.</li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li>Better server-side rendering
+            <ul>
+                <li>Completely rewritten.</li>
+                <li>Now supports streaming.</li>
+            </ul>
+        </li>
+        <li>
+            Support for custom DOM attributes
+            <ul>
+                <li>Instead of ignoring unrecognized HTML and SVG attributes, React will now pass them through to the DOM.
+                </li>
+            </ul>
+        </li>
+    </ul>
 </body>
 
 </html>
