@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":
-      "./node_modules/.bin/browser-sync start --server --no-open --cors --directory --files \"*/*\""
+      "browser-sync start --server --no-open --cors --directory --files \"*/*\""
   },
   "keywords": [],
   "author": "",
