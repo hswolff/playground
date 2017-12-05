@@ -1,28 +1,3 @@
-const notificationsRoot = document.getElementById('notifications');
-
-class Notification extends React.Component {
-  render() {
-    return ReactDOM.createPortal(
-      <div className="notification">{this.props.children}</div>,
-      notificationsRoot
-    );
-  }
-}
-
-const PrettyTime = ({ time }) => moment(time, 'MM-DD-YYYY').fromNow();
-
-const DataCell = ({ data, includeError }) => (
-  <section className="data-container">
-    <header>
-      {data.user.username} wrote this{' '}
-      <i>
-        <PrettyTime time={data.date} />
-      </i>
-    </header>
-    <div>{data.message}</div>
-  </section>
-);
-
 class ErrorBoundary extends React.Component {
   state = {
     hasError: false,
@@ -41,6 +16,30 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+const notificationsRoot = document.getElementById('notifications');
+class Notification extends React.Component {
+  render() {
+    return ReactDOM.createPortal(
+      <div className="notification">{this.props.children}</div>,
+      notificationsRoot
+    );
+  }
+}
+
+const PrettyDate = ({ date }) => moment(date, 'MM-DD-YYYY').fromNow();
+
+const DataCell = ({ data }) => (
+  <section className="row">
+    <header>
+      {data.user.username} &bull;{' '}
+      <i>
+        <PrettyDate date={data.date} />
+      </i>
+    </header>
+    <div>{data.message}</div>
+  </section>
+);
+
 class Page extends React.Component {
   state = {
     data: generateData(),
@@ -51,7 +50,7 @@ class Page extends React.Component {
     this.setState({ data: [], includeError });
 
     setTimeout(() => {
-      this.setState({ data: generateData(10, { includeError }) });
+      this.setState({ data: generateData({ includeError }) });
     }, 1000);
   };
 
@@ -81,7 +80,7 @@ class Page extends React.Component {
 
 const App = () => (
   <React.Fragment>
-    <h1>React 16 Features</h1>
+    <h1>React 16</h1>
     <Page />
   </React.Fragment>
 );

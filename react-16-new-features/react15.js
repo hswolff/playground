@@ -1,44 +1,24 @@
-const notificationsRoot = document.getElementById('notifications');
-
 class Notification extends React.Component {
   render() {
     return <div className="notification">{this.props.children}</div>;
   }
 }
 
-const PrettyTime = ({ time }) => (
-  <span>{moment(time, 'MM-DD-YYYY').fromNow()}</span>
+const PrettyDate = ({ date }) => (
+  <span>{moment(date, 'MM-DD-YYYY').fromNow()}</span>
 );
 
-const DataCell = ({ data, includeError }) => (
-  <section className="data-container">
+const DataCell = ({ data }) => (
+  <section className="row">
     <header>
-      {data.user.username} wrote this{' '}
+      {data.user.username} &bull;{' '}
       <i>
-        <PrettyTime time={data.date} />
+        <PrettyDate date={data.date} />
       </i>
     </header>
     <div>{data.message}</div>
   </section>
 );
-
-class ErrorBoundary extends React.Component {
-  state = {
-    hasError: false,
-  };
-
-  componentDidCatch(error, info) {
-    this.setState({ hasError: true });
-
-    console.log(`Encountered an error! ${error.message}`);
-  }
-
-  render() {
-    const errorContent =
-      this.props.onError !== undefined ? this.props.onError() : null;
-    return this.state.hasError ? errorContent : this.props.children;
-  }
-}
 
 class Page extends React.Component {
   state = {
@@ -50,7 +30,7 @@ class Page extends React.Component {
     this.setState({ data: [], includeError });
 
     setTimeout(() => {
-      this.setState({ data: generateData(10, { includeError }) });
+      this.setState({ data: generateData({ includeError }) });
     }, 1000);
   };
 

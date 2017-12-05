@@ -1,4 +1,4 @@
-function generateData(size = 10, { includeError = false } = {}) {
+function generateData({ includeError = false, size = 10 } = {}) {
   const errorIndexes = includeError ? getMultipleRandomInts(5, 0, size) : {};
 
   const response = [];
