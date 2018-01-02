@@ -1,3 +1,39 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+mongoose.Promise = global.Promise;
+
+const sleep = (time = 0) => new Promise(resolve => setTimeout(resolve, time));
+
+async function connectMongoose() {
+  await mongoose.connect('mongodb://localhost/test');
+
+  const messageSchema = new Schema({
+    user: String,
+    message: String,
+  });
+  const Message = mongoose.model('Message', messageSchema);
+
+  const changeStream = Message.collection.watch({
+    fullDocument: 'updateLookup',
+  });
+  changeStream.on('change', result => {
+    console.log('CHANGES', result.fullDocument);
+  });
+
+  await sleep();
+
+  await Message.create({
+    user: 'itMe',
+    message: `Hello ${Math.random()}`,
+  });
+  await Message.create({
+    user: 'itMe',
+    message: `Hello ${Math.random()}`,
+  });
+
+  return { Message, mongoose };
+}
+
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
@@ -25,7 +61,7 @@ async function connect() {
     console.log('CHANGES', result.fullDocument);
   });
 
-  await new Promise(resolve => setTimeout(resolve));
+  await sleep();
 
   // Insert a single document
   let r = await collection.insertOne({ a: 1 });
@@ -39,7 +75,7 @@ async function connect() {
 }
 
 if (require.main === module) {
-  connect();
+  connectMongoose();
   process.on('SIGINT', () => {
     if (client) {
       client.close();
@@ -50,4 +86,7 @@ if (require.main === module) {
   setInterval(() => {}, Number.POSITIVE_INFINITY);
 }
 
-module.exports = connect;
+// module.exports = connect;
+module.exports = connectMongoose;
+
+// require('./index')().then(resp => Object.assign(global, resp));
